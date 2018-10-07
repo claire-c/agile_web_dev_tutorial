@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
 
+  has_many :line_items
+
+  before_destroy :ensure_not_referenced_by_any_line_item
+
   # Validates that the image, desription and image url must be completed.
   validates :title, :description, :image_url, presence: true
 
@@ -15,4 +19,12 @@ class Product < ApplicationRecord
     message: 'Must be a URL for gif, jpg or png image.'
   }
 
+  private
+    # This is a hook method. It is called before Rails attempts to destroy a row in the db. If the hook method throws abort then the row isn't destroyed and error message runs. The error is associated with the base object in this case, not an individual attribute of the object.
+    def ensure_not_referenced_by_any_line_item
+      unless line_items.empty?
+        errors.add(:base, 'Line items present')
+        throw :abort
+      end
+    end
 end
