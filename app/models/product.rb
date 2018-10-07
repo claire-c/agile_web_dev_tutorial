@@ -6,8 +6,8 @@ class Product < ApplicationRecord
   # Validates that the price needs to be greater than 0.01 and needs to be a number.
   validates :price, numericality: {greater_than_or_equal_to: 0.01}
 
-  # Validates that the title needs to be unique.
-  validates :title, uniqueness: true
+  # Validates that the title needs to be unique and length is ten characters long.
+  validates :title, uniqueness: true, length: { minimum: 10, message: 'Must be ten characters long' }
 
   # Validates that the image must be a jpg, png or gif via a regex. The allow_blank option avoids getting multiple error messages when the field is blank.
   validates :image_url, allow_blank: true, format: {

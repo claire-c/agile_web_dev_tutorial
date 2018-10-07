@@ -56,4 +56,24 @@ class ProductTest < ActiveSupport::TestCase
     assert product.invalid?
     assert_equal ['has already been taken'], product.errors[:title]
   end
+
+  test 'product title character validation' do
+    product = Product.new(
+       title: 'yo',
+       description: 'blah',
+       price: 1,
+       image_url: 'fred.gif'
+      )
+
+    assert product.invalid?
+    assert_equal ['Must be ten characters long'], product.errors[:title]
+
+    product2 = Product.new(
+       title: '1234567890',
+       description: 'blah',
+       price: 1,
+       image_url: 'fred.gif'
+      )
+    assert product2.valid?
+  end
 end
