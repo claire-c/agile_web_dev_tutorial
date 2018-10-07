@@ -1,4 +1,7 @@
 class LineItemsController < ApplicationController
+  # Add CurrentCart module, then use the set_cart method from the module before we use the create action in the controller. This is an action callback.
+  include CurrentCart
+  before_action :set_cart, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
   # GET /line_items
@@ -24,11 +27,14 @@ class LineItemsController < ApplicationController
   # POST /line_items
   # POST /line_items.json
   def create
-    @line_item = LineItem.new(line_item_params)
+    product = Product.find(params[:product_id])
+    # The product that has been found via the params has been passed into the below build method, which creates a new line item relationship to be built between the product and cart object. This is saved in the @line-item variable.
+    @line_item = @cart.line_items.build(product: product)
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item, notice: 'Line item was successfully created.' }
+        # The below redirect sends users back to the cart that the line item has been placed in.
+        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
