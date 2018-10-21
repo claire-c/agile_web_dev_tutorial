@@ -1,5 +1,7 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  # Error handling in case someone puts in an invalid cart url
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
   # GET /carts
   # GET /carts.json
@@ -62,6 +64,13 @@ class CartsController < ApplicationController
   end
 
   private
+
+  # Method to log error in Rails logger with specified message. The user is then redirected to store index. The notice method specifies the message to be placed in a flash so the user can see the error.
+  def invalid_cart
+    logger.error "Attempt to access invalid cart #{params[:id]}"
+    redirect_to store_index_url, notice: 'Invalid cart'
+
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
       @cart = Cart.find(params[:id])
