@@ -34,7 +34,7 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         # The below redirect sends users back to the cart that the line item has been placed in.
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
+        format.html { redirect_to @line_item.cart }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
