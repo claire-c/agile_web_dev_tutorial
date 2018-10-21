@@ -28,8 +28,8 @@ class LineItemsController < ApplicationController
   # POST /line_items.json
   def create
     product = Product.find(params[:product_id])
-    # The product that has been found via the params has been passed into the below build method, which creates a new line item relationship to be built between the product and cart object. This is saved in the @line-item variable.
-    @line_item = @cart.line_items.build(product: product)
+      # The product that has been found via the params has been passed into the below Cart method, which creates a new line item. This is saved in the @line-item variable.
+    @line_item = @cart.add_product(product)
 
     respond_to do |format|
       if @line_item.save
