@@ -1,0 +1,12 @@
+// This line of code tells the browser to replace the content of the element whose id is cart with that HTML.
+
+// The $ is shorthand for the JQuery library.
+
+// $('#cart') tells JQuery to find the HTML element that has an id of cart.
+
+// The html() method is then called with a first argument of the desired replacement for the contents of this element.
+
+// The content is formed by a call to the render() method on the cart object (in the crocodiles).
+
+//The output of that method is processed by an escape_javascript() helper method, shorthand j(). It converts the Ruby string into a format acceptable as input to JavaScript.
+$('#cart').html('<%=j render(@cart) %>');
