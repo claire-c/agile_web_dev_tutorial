@@ -36,7 +36,7 @@ class LineItemsController < ApplicationController
         # The below redirect sends users back to the cart that the line item has been placed in.
         format.html { redirect_to store_index_url }
         # For Ajax request to dynamically update cart in sidebar without refreshing page.
-        format.js
+        format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
