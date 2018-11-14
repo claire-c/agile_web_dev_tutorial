@@ -13,4 +13,4 @@ if ($('#cart tr').length == 1) { $('#cart').show('blind', 1000); }
 //The output of that method is processed by an escape_javascript() helper method, shorthand j(). It converts the Ruby string into a format acceptable as input to JavaScript.
 $('#cart').html('<%=j render(@cart) %>');
 
-$('#current_item').css({'background-color':'#88ff88'}), animate({'background-color':'#114411'}, 1000);
+$('#current_item').css({'background-color':'#88ff88'}).animate({'background-color':'#114411'}, 1000);
